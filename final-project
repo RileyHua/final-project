@@ -1,0 +1,127 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+```{r}
+install.packages("tidyverse")
+install.packages("ggplot2")
+install.packages("readr")
+install.packages("readxl")
+
+```
+```{r}
+install.packages("devtools")
+install.packages("dplyr")
+install.packages("rvest")
+devtools::install_github("DataComputing/DataComputing")
+library(dplyr)
+library(tidyverse)
+```
+
+```{r}
+library(readr)
+BlackFriday <- read_csv("Desktop/BlackFriday.csv")
+View(BlackFriday)
+```
+1. For these one, this is just a general summary that how many different levels in each variables 
+
+```{r}
+library(dplyr)
+BlackFriday%>%
+ summarise (User_ID=n_distinct(User_ID))
+BlackFriday%>%
+  summarise(Product_ID=n_distinct(Product_ID))
+BlackFriday%>%
+  summarise(Gender=n_distinct(Gender))
+BlackFriday%>%
+  summarise(Age=n_distinct(Age))
+BlackFriday%>%
+  summarise(Occupation=n_distinct(Occupation))
+BlackFriday%>%
+  summarise(Product_Category_1=n_distinct(Product_Category_1,na.rm = TRUE))
+BlackFriday%>%
+  summarise(Product_Category_2=n_distinct(Product_Category_2,na.rm = TRUE))
+BlackFriday%>%
+  summarise(Product_Category_3=n_distinct(Product_Category_3,na.rm = TRUE))
+```
+2. This one shows the highest prucahse and lowest purchase
+
+```{r}
+BlackFriday%>%
+  summarise(highest=max(Purchase),lowest=min(Purchase))
+```
+
+3. First part is summarise the total number in different gender for different age and list the top 5 
+Second part is summarise the total number in different gender 
+
+```{r}
+BlackFriday%>%
+  group_by(Gender,Age)%>%
+  summarise(count=n())%>%
+  arrange(desc(count))%>%
+  head(5)
+ BlackFriday%>%
+  group_by(Gender)%>%
+  summarise(count=n())
+```
+4.This graph shows that divide gender into different and summarise the purchase, then find the relationship between age and purchase 
+
+```{r}
+library(ggplot2)
+BlackFriday %>%
+group_by(Age,Gender) %>%
+summarise(total_purchase = sum(Purchase))%>%
+  ggplot(aes(x=Age, y = total_purchase)) +
+geom_col(aes(fill = Gender)) 
+```
+5.This graph shows the relationship between total purchase and city category 
+
+```{r}
+
+BlackFriday %>%
+group_by(User_ID, City_Category) %>%
+summarise(total_purchase = sum(Purchase)) %>%
+ggplot(aes(x = total_purchase, group = City_Category)) + 
+geom_histogram(aes(fill=City_Category,binwidth = 300000, center = 150000))
+```
+6. This graph divided city category into martial status, and then shows the relationship between city category and total purchase in different marital status 
+
+```{r}
+BlackFriday %>%
+group_by(City_Category, Marital_Status) %>%
+summarise(total_purchase = sum(Purchase)) %>%
+ggplot(aes(x = City_Category, y = total_purchase)) + 
+ geom_col(aes(fill = Marital_Status)) 
+```
+7.The graph divide occupation in different gender, and then shows the relationship bewteen occpution and total purchase in different gender 
+
+```{r}
+BlackFriday %>%
+group_by(Occupation,Gender) %>%
+summarise(total_purchase = sum(Purchase))%>%
+  ggplot(aes(x=Occupation, y = total_purchase)) +
+geom_col(aes(fill = Gender)) 
+```
+8.This graph stay in current city years into gender, and then shows the relationship bewteen stay in current city years and totap purchase in different gender 
+
+```{r}
+BlackFriday %>%
+group_by(Stay_In_Current_City_Years,Gender) %>%
+summarise(total_purchase = sum(Purchase))%>%
+  ggplot(aes(x=Stay_In_Current_City_Years, y = total_purchase)) +
+geom_col(aes(fill = Gender))+facet_wrap(Gender~.)
+```
+9. This graph divde product category 1 into age and gender, then shows the relationship between product category 1 and total purchase into different age and gender 
+
+```{r}
+BlackFriday %>%
+group_by(Product_Category_1,Age,Gender) %>%
+summarise(total_purchase = sum(Purchase))%>%
+  ggplot(aes(x=Product_Category_1, y = total_purchase)) +
+geom_col(aes(fill = Age))+facet_grid(~Gender)
+```

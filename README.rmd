@@ -22,7 +22,7 @@ library(tidyverse)
 
 ```{r}
 library(readr)
-BlackFriday <- read_csv("Desktop/BlackFriday.csv")
+BlackFriday <- read_csv("~/Downloads/BlackFriday.csv")
 View(BlackFriday)
 ```
 1. For these one, this is just a general summary that how many different levels in each variables 

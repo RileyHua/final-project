@@ -19,7 +19,7 @@ devtools::install_github("DataComputing/DataComputing")
 library(dplyr)
 library(tidyverse)
 ```
-
+I choose this data because I love blackfriday and I love shopping.
 ```{r}
 library(readr)
 BlackFriday <- read_csv("~/Downloads/BlackFriday.csv")

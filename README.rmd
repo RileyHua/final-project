@@ -104,7 +104,7 @@ summarise(total_purchase = sum(Purchase))%>%
   ggplot(aes(x=Stay_In_Current_City_Years, y = total_purchase)) +
 geom_col(aes(fill = Gender))+facet_wrap(Age~.)
 ```
-9. This graph divde product category 1 into age and gender, then shows the relationship between product category 1 and total purchase into different age and gender 
+9. This graph divde product category 1 into age and gender, then shows the relationship between product category 1 and total purchase into different age and gender。This one also proves that there are more male pruchase than female however, I think this because t=some married male paid fro their waives. 
 
 ```{r}
 BlackFriday %>%

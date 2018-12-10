@@ -78,17 +78,16 @@ summarise(total_purchase = sum(Purchase)) %>%
 ggplot(aes(x = total_purchase, group = City_Category)) + 
 geom_histogram(aes(fill=City_Category,binwidth = 300000, center = 150000))
 ```
-6. This graph divided city category into martial status, and then shows the relationship between city category and total purchase in different marital status 
-
+6. This graph divided city category into martial status,gender and then shows the relationship between city category and total purchase in different marital status O is married, 1 is not married From the graph, there is no obvious difference bewteen married or not married in women.However for male, there is an obvious difference between married or not married in city B and C whcih means after male get married, they would like to buy more things.
 ```{r}
 BlackFriday %>%
-group_by(City_Category, Marital_Status) %>%
+group_by(City_Category, Marital_Status,Gender) %>%
 summarise(total_purchase = sum(Purchase)) %>%
 ggplot(aes(x = City_Category, y = total_purchase)) + 
- geom_col(aes(fill = Marital_Status)) 
+ geom_col(aes(fill = Marital_Status))+facet_grid(~ Gender)
 ```
-7.The graph divide occupation in different gender, and then shows the relationship bewteen occpution and total purchase in different gender 
 
+7.The graph divide occupation in different gender, and then shows the relationship bewteen occpution and total purchase in different gender. In the dataset, it did not say the different number for occpution means. However, from the graph we can see that male still pruchase more than women no matter the occupation is
 ```{r}
 BlackFriday %>%
 group_by(Occupation,Gender) %>%
@@ -96,14 +95,14 @@ summarise(total_purchase = sum(Purchase))%>%
   ggplot(aes(x=Occupation, y = total_purchase)) +
 geom_col(aes(fill = Gender)) 
 ```
-8.This graph stay in current city years into gender, and then shows the relationship bewteen stay in current city years and totap purchase in different gender 
+8.This graph stay in current city years into gender, and then shows the relationship bewteen stay incurrent city years and totap purchase in different gender 
 
 ```{r}
 BlackFriday %>%
-group_by(Stay_In_Current_City_Years,Gender) %>%
+group_by(Stay_In_Current_City_Years,Gender,Age,Product_Category_2) %>%
 summarise(total_purchase = sum(Purchase))%>%
   ggplot(aes(x=Stay_In_Current_City_Years, y = total_purchase)) +
-geom_col(aes(fill = Gender))+facet_wrap(Gender~.)
+geom_col(aes(fill = Gender))+facet_wrap(Age~.)
 ```
 9. This graph divde product category 1 into age and gender, then shows the relationship between product category 1 and total purchase into different age and gender 
 

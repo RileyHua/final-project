@@ -7,10 +7,12 @@ This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute
 Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
 
 ```{r}
-
+library(readr)
 library(tidyverse)
+library(dplyr)
+library(ggplot2)
 ```
-I choose this data because I love blackfriday and I love shopping.
+I choose this data because I love blackfriday and I love shopping, and I want to know did men or women spend more money on blackfriday and in which age spend more money. 
 ```{r}
 library(readr)
 BlackFriday <- read_csv("~/Downloads/BlackFriday.csv")
@@ -45,7 +47,7 @@ BlackFriday%>%
 ```
 3. First part is summarise the total number in different gender for different age and list the top 5 
 Second part is summarise the total number in different gender 
-
+From this one, the interesting thing is men in age 26-35 spend more money than others. 
 ```{r}
 BlackFriday%>%
   group_by(Gender,Age)%>%
@@ -56,7 +58,8 @@ BlackFriday%>%
   group_by(Gender)%>%
   summarise(count=n())
 ```
-4.This graph shows that divide gender into different and summarise the purchase, then find the relationship between age and purchase 
+4.This graph shows that divide gender into different and summarise the purchase, then find the relationship between age and purchase.
+Men spend more money than women at all ages. The reason might be men paid for their wives, or maybe men would like to buy some expensive things.
 
 ```{r}
 library(ggplot2)
